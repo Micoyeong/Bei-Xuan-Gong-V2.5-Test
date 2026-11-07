@@ -1,13 +1,9 @@
-# 北玄宫 V2.5 照片神像测试版
+# 北玄宫 V2.5 2.5D 神像视差测试
 
-在独立 V2.5 测试站基础上，保留 Three.js 主殿和 `ceiling-dragon-bagua.png`，
-将程序化占位神像替换为用户确认的三张神像照片平面（方案 A）。
+独立测试包：用确认的神像效果图制作前后分层视差视觉测试。移动鼠标或触摸拖动可看到轻微视角变化。
+- `temple-background.jpg`：去除神像主体后的背景层
+- `deity-fazhu.png`、`deity-taizi.png`、`deity-xuandi.png`：神像前景层
+- `incense-urn.png`：前景香炉层
+- `index.html`：视差交互展示页
 
-- `index.html`：测试站页面
-- `ceiling-dragon-bagua.png`：保留龙凤八卦天花板
-- `deity-fazhu.png`：法主公照片
-- `deity-taizi.png`：太子照片
-- `deity-xuandi.png`：玄天上帝照片
-
-说明：神像目前是正面照片平面，可在 3D 场景中显示，但不是可从侧面观察的真实 3D 雕像。
-仅用于 V2.5 测试仓库，不要覆盖 V2.4。
+注意：这是 2.5D 图片分层视差演示，不是可自由环绕观看的真实 3D/GLB 模型。只用于独立测试，不会修改 V2.4。
