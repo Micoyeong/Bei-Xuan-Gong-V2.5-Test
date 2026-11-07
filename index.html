@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#17130f">
-<title>北玄宫 BEI XUAN GONG V2.5 | 三尊坐姿神像测试</title>
+<title>北玄宫 BEI XUAN GONG V2.5 | 三尊照片神像测试</title>
 <style>
 :root{--gold:#d9bb82;--cream:#f5eee2;--ink:#17130f;--muted:#c9bda9}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#17130f;color:var(--cream);font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -36,9 +36,9 @@ footer{padding:28px 7vw;border-top:1px solid #ffffff1c;color:#a99d8c;font-size:1
 <section class="hero"><div class="hero-inner"><div class="seal">玄</div><h1>北玄宫</h1><div class="roman">BEI XUAN GONG</div><p class="tag">一方清静之境 · 一处文化传承之所<br>欢迎来到北玄宫虚拟空间</p><button class="btn" id="enter">进入虚拟主殿</button><a class="btn secondary" href="#about">认识北玄宫</a></div></section>
 <section class="info" id="about"><div class="eyebrow">ABOUT BEI XUAN GONG</div><h2>让信仰与文化，在数字空间相遇</h2><p class="intro">北玄宫虚拟神庙计划，以现代、宁静、庄严的空间语言，呈现道教信仰与华人文化。欢迎进入第一版 3D 主殿体验。</p></section>
 <section class="info" id="deities"><div class="eyebrow">MAIN HALL</div><h2>主殿神明</h2><p class="intro">主殿布局：太子居中为主神，左侧法主公，右侧玄天上帝。</p><div class="cards">
-<article class="card"><small>LEFT · 左侧</small><h3>法主公</h3><p>主殿左侧神位。神像造型将依北玄宫确认的传统形象进一步制作。</p></article>
-<article class="card"><small>CENTER · 主神</small><h3>太子</h3><p>北玄宫主神，居于主殿中央，是虚拟主殿的核心视觉。</p></article>
-<article class="card"><small>RIGHT · 右侧</small><h3>玄天上帝</h3><p>主殿右侧神位。后续将补充经确认的神像造型与文化介绍。</p></article></div></section>
+<article class="card"><small>LEFT · 左侧</small><h3>法主公</h3><p>主殿左侧神位。采用已确认的法主公照片素材进行展示。</p></article>
+<article class="card"><small>CENTER · 主神</small><h3>太子</h3><p>采用已确认的太子照片素材，居于主殿中央。</p></article>
+<article class="card"><small>RIGHT · 右侧</small><h3>玄天上帝</h3><p>主殿右侧神位。采用已确认的玄天上帝照片素材进行展示。</p></article></div></section>
 </main><footer>© <span id="year"></span> BEI XUAN GONG · 北玄宫　｜　虚拟文化空间第一阶段</footer>
 
 <div id="temple" aria-label="北玄宫3D虚拟主殿">
@@ -180,7 +180,27 @@ function build(){
    // Name plaque on each pedestal.
    const signCanvas=document.createElement('canvas');signCanvas.width=512;signCanvas.height=128;const c=signCanvas.getContext('2d');c.fillStyle='#f4d69b';c.font='bold 68px serif';c.textAlign='center';c.textBaseline='middle';c.fillText(name,256,66);const tex=new THREE.CanvasTexture(signCanvas);const sign=new THREE.Mesh(new THREE.PlaneGeometry(1.45,.32),new THREE.MeshBasicMaterial({map:tex,transparent:true}));sign.position.set(x,2.08,-5.18);scene.add(sign);
  }
- deity(-3.25,'法主公','fazhu');deity(0,'太子','taizi');deity(3.25,'玄天上帝','xuandi');
+
+ // V2.5 Photo-based deity panels: approved artwork crops,方案 A.
+ // These are image planes, not transparent cut-outs or 3D statues.
+ const photoLoader = new THREE.TextureLoader();
+ function addDeityPhoto(file, x, width, height, y=3.42) {
+   photoLoader.load('./'+file, texture => {
+     texture.colorSpace = THREE.SRGBColorSpace;
+     texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+     const panel = new THREE.Mesh(
+       new THREE.PlaneGeometry(width,height),
+       new THREE.MeshBasicMaterial({map:texture, side:THREE.DoubleSide})
+     );
+     panel.position.set(x,y,-5.12);
+     panel.renderOrder = 3;
+     scene.add(panel);
+   });
+ }
+ addDeityPhoto('deity-fazhu.png', -3.25, 2.95, 4.35);
+ addDeityPhoto('deity-taizi.png', 0, 3.15, 4.38);
+ addDeityPhoto('deity-xuandi.png', 3.25, 2.98, 4.05);
+
  // upper temple name plaque
  addBox(5.4,1.05,.22,black,0,9.0,-8.05);addBox(5.5,.07,.28,gold,0,9.56,-8.0);addBox(5.5,.07,.28,gold,0,8.45,-8.0);
  const titleCanvas=document.createElement('canvas');titleCanvas.width=1024;titleCanvas.height=256;const tc=titleCanvas.getContext('2d');tc.fillStyle='#efc477';tc.textAlign='center';tc.font='bold 112px serif';tc.fillText('北 玄 宫',512,132);tc.font='34px sans-serif';tc.letterSpacing='8px';tc.fillText('BEI XUAN GONG',512,202);const titleTex=new THREE.CanvasTexture(titleCanvas);const titleMesh=new THREE.Mesh(new THREE.PlaneGeometry(5.1,.95),new THREE.MeshBasicMaterial({map:titleTex,transparent:true}));titleMesh.position.set(0,9.0,-7.91);scene.add(titleMesh);
